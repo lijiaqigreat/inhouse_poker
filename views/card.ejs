@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Title</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <p><%= user.name %></p>
+    <% if(user.cards.length === 2){ %>
+      Please refresh when the game starts
+    <% }else{ %>
+      <p><%= user.cards[0] %></p>
+      <p><%= user.cards[1] %></p>
+    <% } %>
+  </body>
+</html>
