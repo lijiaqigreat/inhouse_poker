@@ -25,7 +25,19 @@ const game = {
 const tmp = [
   (game) => {
     const cards = _.map(cardDealer.shuffle(), (card) => {
-      return JSON.stringify(card);
+      const text = {
+        "Clubs": "♠",
+        "Diamonds": "♦",
+        "Spades": "♣",
+        "Hearts": "♥",
+      }[card.Suit]+" "+card.Rank;
+      const color = {
+        "Clubs": "#000000",
+        "Diamonds": "#00FF00",
+        "Spades": "#0000FF",
+        "Hearts": "#FF0000",
+      }[card.Suit];
+      return '<p style="color:'+ color + '">' + text +'</p>';
     });
     game.cards = cards;
     game.publicGame.cards = [];
@@ -91,21 +103,25 @@ router.get('/leave', (req, res, next) => {
 
 router.get('/card', (req, res, next) => {
   const key = req.cookies[COOKIES_KEY];
-  res.render('card', {user: users[key]});
+  if(users[key]){
+    res.render('card', {user: users[key]});
+  }else{
+    res.redirect('/');
+  }
 });
 
 router.get('/community', (req, res, next) => {
   const state = req.query.state;
   const i1 = _.indexOf(STATES, state);
   const i2 = _.indexOf(STATES, publicGame.state);
-  if(i1==i2){
+  if(state == 'preflop'){
+    tmp[0](game);
+    tmp[1](game);
+  }else if(i1==i2){
   }else if(i1==i2+1){
     tmp[i1](game);
   }else if(state == 'initial'){
     tmp[0](game);
-  }else if(state == 'preflop'){
-    tmp[0](game);
-    tmp[1](game);
   }
   res.render('community', {publicGame, debug: JSON.stringify(game)});
 });

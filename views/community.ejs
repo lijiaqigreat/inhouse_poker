@@ -17,46 +17,46 @@
     <dir class="cards">
     </dir>
     <dir class="buttons">
-      <a href="?state=initial">Restart</a>
+      <a href="?state=preflop">Restart</a>
       <a href="?state=flop">See flop</a>
     </div>
     <% break; %>
     <% case 'flop': %>
     <dir class="cards">
-      <p><%= publicGame.cards[0] %>
-      <p><%= publicGame.cards[1] %>
-      <p><%= publicGame.cards[2] %>
+      <p><%- publicGame.cards[0] %>
+      <p><%- publicGame.cards[1] %>
+      <p><%- publicGame.cards[2] %>
     </dir>
     <dir class="buttons">
-      <a href="?state=initial">Restart</a>
+      <a href="?state=preflop">Restart</a>
       <a href="?state=turn">Turn</a>
     </div>
     <% break; %>
     <% case 'turn': %>
     <dir class="cards">
-      <p><%= publicGame.cards[0] %>
-      <p><%= publicGame.cards[1] %>
-      <p><%= publicGame.cards[2] %>
-      <p><%= publicGame.cards[3] %>
+      <p><%- publicGame.cards[0] %>
+      <p><%- publicGame.cards[1] %>
+      <p><%- publicGame.cards[2] %>
+      <p><%- publicGame.cards[3] %>
     </div>
     <dir class="buttons">
-      <a href="?state=initial">Restart</a>
+      <a href="?state=preflop">Restart</a>
       <a href="?state=river">River</a>
     </div>
     <% break; %>
     <% case 'river': %>
     <dir class="cards">
-      <p><%= publicGame.cards[0] %>
-      <p><%= publicGame.cards[1] %>
-      <p><%= publicGame.cards[2] %>
-      <p><%= publicGame.cards[3] %>
-      <p><%= publicGame.cards[4] %>
+      <p><%- publicGame.cards[0] %>
+      <p><%- publicGame.cards[1] %>
+      <p><%- publicGame.cards[2] %>
+      <p><%- publicGame.cards[3] %>
+      <p><%- publicGame.cards[4] %>
     </div>
     <dir class="buttons">
-      <a href="?state=initial">Restart</a>
+      <a href="?state=preflop">Restart</a>
     </div>
     <% break; %>
     <% } %>
-    <%= debug %>
+    <!-- <%= debug %> -->
   </body>
 </html>
