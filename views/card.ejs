@@ -9,8 +9,11 @@
     <% if(user.cards.length !== 2){ %>
       Please refresh when the game starts
     <% }else{ %>
-      <p><%- user.cards[0] %></p>
-      <p><%- user.cards[1] %></p>
+      <div class="cards two-cards">
+        <% user.cards.forEach(function(card){ %>
+          <% include partials/card %>
+        <% }) %>
+      </div>
     <% } %>
   </body>
 </html>

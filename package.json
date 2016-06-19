@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "array-shuffle": "^1.0.1",
     "body-parser": "~1.13.2",
     "card-dealer": "^0.1.3",
     "cards": "^0.1.1",

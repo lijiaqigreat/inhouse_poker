@@ -1,6 +1,6 @@
 const express = require('express');
 const crypto = require('crypto');
-const cardDealer = require('card-dealer');
+const shuffle = require('array-shuffle');
 const _ = require('underscore');
 const router = express.Router();
 const COOKIES_KEY = 'key';
@@ -21,25 +21,37 @@ const game = {
   publicGame: publicGame,
   users: users,
 }
+const suites = [
+  { id: 0, ascii: "♠", color: "#000000", abbr: "C", text: "Clubs" },
+  { id: 1, ascii: "♦", color: "#00FF00", abbr: "D", text: "Diamonds" },
+  { id: 2, ascii: "♥", color: "#FF0000", abbr: "H", text: "Hearts" },
+  { id: 3, ascii: "♣", color: "#0000FF", abbr: "S", text: "Spades" },
+];
+const ranks = [
+  { id: 0, abbr: "2", text: "2" },
+  { id: 1, abbr: "3", text: "3" },
+  { id: 2, abbr: "4", text: "4" },
+  { id: 3, abbr: "5", text: "5" },
+  { id: 4, abbr: "6", text: "6" },
+  { id: 5, abbr: "7", text: "7" },
+  { id: 6, abbr: "8", text: "8" },
+  { id: 7, abbr: "9", text: "9" },
+  { id: 8, abbr: "T", text: "10" },
+  { id: 9, abbr: "J", text: "Jack" },
+  { id: 10, abbr: "Q", text: "Queen" },
+  { id: 11, abbr: "K", text: "King" },
+  { id: 12, abbr: "A", text: "Ace" },
+];
+const cards = _.map(new Array(52), (x, i) => {
+  const rank = ranks[(i/4)|0];
+  const suite = suites[i%4];
+
+  return { rank, suite, abbr: rank.abbr + suite.abbr, text: `${suite.ascii}${rank.text}` };
+});
 
 const tmp = [
   (game) => {
-    const cards = _.map(cardDealer.shuffle(), (card) => {
-      const text = {
-        "Clubs": "♠",
-        "Diamonds": "♦",
-        "Spades": "♣",
-        "Hearts": "♥",
-      }[card.Suit]+" "+card.Rank;
-      const color = {
-        "Clubs": "#000000",
-        "Diamonds": "#00FF00",
-        "Spades": "#0000FF",
-        "Hearts": "#FF0000",
-      }[card.Suit];
-      return '<p style="color:'+ color + '">' + text +'</p>';
-    });
-    game.cards = cards;
+    game.cards = shuffle(cards);
     game.publicGame.cards = [];
     game.publicGame.state = 'initial';
     _.each(game.users, (user) => {

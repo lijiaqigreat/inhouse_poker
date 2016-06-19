@@ -7,56 +7,41 @@
   <body>
     <% switch(publicGame.state){case '': %>
     <% case 'initial': %>
-    <dir class="cards">
-    </dir>
-    <dir class="buttons">
+    <div class="buttons">
       <a href="?state=preflop">Start Game</a>
+    </div>
+    <div class="cards">
     </div>
     <% break; %>
     <% case 'preflop': %>
-    <dir class="cards">
-    </dir>
-    <dir class="buttons">
+    <div class="buttons">
       <a href="?state=preflop">Restart</a>
       <a href="?state=flop">See flop</a>
     </div>
     <% break; %>
     <% case 'flop': %>
-    <dir class="cards">
-      <p><%- publicGame.cards[0] %>
-      <p><%- publicGame.cards[1] %>
-      <p><%- publicGame.cards[2] %>
-    </dir>
-    <dir class="buttons">
+    <div class="buttons">
       <a href="?state=preflop">Restart</a>
       <a href="?state=turn">Turn</a>
     </div>
     <% break; %>
     <% case 'turn': %>
-    <dir class="cards">
-      <p><%- publicGame.cards[0] %>
-      <p><%- publicGame.cards[1] %>
-      <p><%- publicGame.cards[2] %>
-      <p><%- publicGame.cards[3] %>
-    </div>
-    <dir class="buttons">
+    <div class="buttons">
       <a href="?state=preflop">Restart</a>
       <a href="?state=river">River</a>
     </div>
     <% break; %>
     <% case 'river': %>
-    <dir class="cards">
-      <p><%- publicGame.cards[0] %>
-      <p><%- publicGame.cards[1] %>
-      <p><%- publicGame.cards[2] %>
-      <p><%- publicGame.cards[3] %>
-      <p><%- publicGame.cards[4] %>
-    </div>
-    <dir class="buttons">
+    <div class="buttons">
       <a href="?state=preflop">Restart</a>
     </div>
     <% break; %>
     <% } %>
+    <div class="cards">
+      <% publicGame.cards.forEach(function(card){ %>
+        <% include partials/card %>
+      <% }) %>
+    </div>
     <!-- <%= debug %> -->
   </body>
 </html>
