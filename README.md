@@ -4,10 +4,9 @@ A server were you can setup to play Texas Holdem with friends at home.
 
 ## Philosiphy
 
-1. Preserve interactions between players.
 1. Automate mundane tasks.
-
-1. Preserve interactions between players, such as how player push chips, how
+1. Instead of making it an app that people can play just by looking at their
+   phones. We want to preserve face-to-face interactions between players.
 
 ## Setup
 
