@@ -5,10 +5,10 @@
   "scripts": {
     "serve": "webpack serve",
     "build": "webpack",
-    "test": "webpack --config webpack.config.test.js"
+    "test1": "webpack --config webpack.config.test.js",
+    "protobufjs": "pbjs -t static-module -w commonjs -o src/proto.js ../personal_server/protobuf/command.proto"
   },
   "dependencies": {
-    "array-shuffle": "^1.0.1",
     "body-parser": "~1.13.2",
     "card-dealer": "^0.1.3",
     "cards": "^0.1.1",
@@ -18,19 +18,28 @@
     "express": "~4.13.1",
     "less-middleware": "1.0.x",
     "morgan": "~1.6.1",
-    "serve-favicon": "~2.3.0",
-    "underscore": "^1.8.3"
+    "serve-favicon": "~2.3.0"
   },
   "devDependencies": {
+    "array-shuffle": "^1.0.1",
     "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^6.3.1",
+    "crypto": "^1.0.1",
     "ejs-html-loader": "^4.0.1",
     "ejs-webpack-loader": "^2.2.2",
     "extract-loader": "^5.1.0",
     "file-loader": "^6.2.0",
+    "google-protobuf": "^3.14.0-rc.2",
     "html-loader": "^1.3.2",
     "html-webpack-plugin": "^4.5.0",
+    "protobufjs": "^6.10.1",
+    "protobufjs-loader": "^1.0.1",
     "sass": "^1.29.0",
     "sass-loader": "^10.1.0",
+    "seedrandom": "^3.0.5",
+    "ts-loader": "^8.0.11",
+    "typescript": "^4.0.5",
+    "underscore": "^1.11.0",
     "url-loader": "^4.1.1",
     "webpack": "^5.4.0",
     "webpack-cli": "^4.2.0",

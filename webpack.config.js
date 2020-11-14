@@ -1,6 +1,7 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyPlugin = require('copy-webpack-plugin');
 const src = "src"
 const dist = "dist"
 
@@ -9,30 +10,33 @@ const toRelativePathWithExt = (filePath, ext) => {
   return relative.replace(path.extname(relative), ext)
 }
 
-const createHtmlPlugin = (htmlPath, chunks = [path.basename(htmlPath, ".html")]) =>
+const createHtmlPlugin = (ejsPath, chunks = [path.basename(ejsPath, ".ejs")]) =>
   new HtmlWebpackPlugin({
-    template: path.resolve(__dirname, "src", htmlPath),
+    template: path.resolve(__dirname, "src", ejsPath),
     chunks
   })
 
 const pages = {
-  "index.html": ["index"],
+  "index.ejs": [],
+  "hand.ejs": ["index"],
+  "community.ejs": ["index"],
 }
 
 function createEntries() {
   const rtn = {}
-  for(const htmlPath in pages){
-    pages[htmlPath].forEach(entry => rtn[entry] = `./${entry}.js`)
+  for(const ejsPath in pages){
+    pages[ejsPath].forEach(entry => rtn[entry] = `./${entry}.js`)
   }
   return rtn
 }
 
 function createHtmlPlugins() {
   const rtn = []
-  for(const htmlPath in pages){
+  for(const ejsPath in pages){
     rtn.push(new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "src", htmlPath),
-      chunks: pages[htmlPath],
+      template: path.resolve(__dirname, "src", ejsPath),
+      chunks: pages[ejsPath],
+      filename: ejsPath.replace(path.extname(ejsPath), ".html")
     }))
   }
   return rtn
@@ -52,9 +56,10 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.html$/i,
+        test: /\.ejs/i,
         use: [
           'html-loader',
+          'ejs-html-loader',
         ],
       },
       {
@@ -70,7 +75,18 @@ module.exports = {
         ],
       },
       {
-        test: /\.svg$/,
+        test: /\.proto$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(svg|json)$/,
         use: [
           {
             loader: 'file-loader',
@@ -84,7 +100,17 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(),
+    new CopyPlugin({
+      patterns: [
+        { from: '../public', to: '.' },
+      ],
+      options: {
+        concurrency: 100,
+      },
+    }),
     ...createHtmlPlugins(),
   ],
-  watch: true,
+  devServer: {
+    disableHostCheck: true,
+  },
 };
